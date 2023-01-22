@@ -7,6 +7,7 @@ public class SelectAllTest {
         // DB 연결을 위한 인터페이스
         Connection conn = null;
         PreparedStatement ps = null;
+        // DBMS안에 있는 결과를 가져옴
         ResultSet rs = null;
 
         try {
@@ -14,9 +15,9 @@ public class SelectAllTest {
             // DBMS와 연결을 하고 Connection을 구현하고 있는 객체를 반환
             conn =
                     DriverManager.getConnection(
-                            "jdbc:mysql://localhost/exampledb?useUnicode=true&serverTimezone=Asia/Seoul",
-                            "gihun",
-                            "gihun");
+                            "jdbc:mysql://localhost/test?useUnicode=true&serverTimezone=Asia/Seoul",
+                            "root",
+                            "root");
 
             if (conn != null) {
                 System.out.println("DBMS 연결 성공!");
@@ -28,10 +29,11 @@ public class SelectAllTest {
             ps = conn.prepareStatement("select role_id, name from role");
 
             // select 문이 실행되면, 실행된 결과는 DBMS에 있다.
-            // 살행된 결과를 ResultSet이 참조한다.
+            // 실행된 결과를 ResultSet이 참조한다.
             rs = ps.executeQuery(); // select 문 실행
 
-            // next()느 데이터를 한 줄(record)을 읽어오면 true를 반환.
+            // rs.next()는 한줄을 가져옴
+            // next()는 데이터를 한 줄(record)을 읽어오면 true를 반환.
             // 더 이상 읽어올게 없을때까지 반복한다.
             while(rs.next()) {
                 int roleId = rs.getInt("role_id");

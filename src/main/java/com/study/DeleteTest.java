@@ -16,9 +16,9 @@ public class DeleteTest {
             // DBMS와 연결을 하고 Connection을 구현하고 있는 객체를 반환
             conn =
                     DriverManager.getConnection(
-                            "jdbc:mysql://localhost/exampledb?useUnicode=true&serverTimezone=Asia/Seoul",
-                            "gihun",
-                            "gihun");
+                            "jdbc:mysql://localhost/test?useUnicode=true&serverTimezone=Asia/Seoul",
+                            "root",
+                            "root");
 
             if (conn != null) {
                 System.out.println("DBMS 연결 성공!");
@@ -34,6 +34,7 @@ public class DeleteTest {
 
             // SQL실행 executeUpdate(); - insert, update, delete 할 때 사용.
             int updateCount = ps.executeUpdate();
+            System.out.println("삭제되었습니다.");
             System.out.println("수정된 건수 : " + updateCount);
 
         } catch (SQLException ex) {
