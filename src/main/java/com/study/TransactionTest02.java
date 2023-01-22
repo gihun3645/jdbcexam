@@ -16,9 +16,9 @@ public class TransactionTest02 {
             // DBMS와 연결을 하고 Connection을 구현하고 있는 객체를 반환
             conn =
                     DriverManager.getConnection(
-                            "jdbc:mysql://localhost/exampledb?useUnicode=true&serverTimezone=Asia/Seoul",
-                            "gihun",
-                            "gihun");
+                            "jdbc:mysql://localhost/test?useUnicode=true&serverTimezone=Asia/Seoul",
+                            "root",
+                            "root");
 
             // 자동 커밋을 false로 설정
             conn.setAutoCommit(false);
@@ -41,9 +41,9 @@ public class TransactionTest02 {
 
             // Transaction01 을 실행하면서 02를 실행하면 처리가 안됨
 
-            System.out.println("10초간 쉰다.");
-            Thread.sleep(10000); // 10초간 멈춘다.
-            System.out.println("10초 다 쉬었다.");
+            System.out.println("2초간 쉰다.");
+            Thread.sleep(2000); // 2초간 멈춘다.
+            System.out.println("2초 다 쉬었다.");
             conn.commit();
         } catch (Exception ex) {
             try {

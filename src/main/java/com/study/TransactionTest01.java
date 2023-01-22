@@ -16,9 +16,9 @@ public class TransactionTest01 {
             // DBMS와 연결을 하고 Connection을 구현하고 있는 객체를 반환
             conn =
                     DriverManager.getConnection(
-                            "jdbc:mysql://localhost/exampledb?useUnicode=true&serverTimezone=Asia/Seoul",
-                            "gihun",
-                            "gihun");
+                            "jdbc:mysql://localhost/test?useUnicode=true&serverTimezone=Asia/Seoul",
+                            "root",
+                            "root");
 
             // 자동 커밋을 false로 설정
             conn.setAutoCommit(false);
@@ -37,12 +37,18 @@ public class TransactionTest01 {
             int updateCount = ps.executeUpdate();
             System.out.println("수정된 건수 : " + updateCount);
 
-            System.out.printf("10초간쉰다.");
-            Thread.sleep(10000); // 10초간 정지
-            System.out.println("10초간 다 쉬었다");
-            conn.commit();
+            System.out.println("2초간쉰다.");
+            Thread.sleep(2000); // 2초간 정지
+            System.out.println("2초간 다 쉬었다");
+
+            // 강제로 예외 발생
+//            if(1 == 1) {
+//                throw new RuntimeException("강제 예외 발생");
+//            }
+            conn.commit(); // 완료되면 커밋
         } catch (Exception ex) {
             try {
+                // 그렇지 못하면 롤백
                 System.out.println("ROLEBACK 합니다!!");
                 conn.rollback();
             } catch (SQLException e) {

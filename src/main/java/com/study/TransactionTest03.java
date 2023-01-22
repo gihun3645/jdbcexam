@@ -14,23 +14,26 @@ public class TransactionTest03 {
             // DBMS와 연결을 하고 Connection을 구현하고 있는 객체를 반환
             conn =
                     DriverManager.getConnection(
-                            "jdbc:mysql://localhost/exampledb?useUnicode=true&serverTimezone=Asia/Seoul",
-                            "gihun",
-                            "gihun");
+                            "jdbc:mysql://localhost/test?useUnicode=true&serverTimezone=Asia/Seoul",
+                            "root",
+                            "root");
 
             conn.setAutoCommit(false);
 
+            // 읽어 오기 전에 조회수 증가
             ps = conn.prepareStatement("update board set view_cnt = view_cnt + 1 where board_id = ?");
             ps.setInt(1, 1);
             int updateCount = ps.executeUpdate();
+            // id가 없는 경우
             if(updateCount == 0)
                 throw new RuntimeException("board_id에 해당하는 자료가 없습니다.");
 
+            // 같은 ps를 쓸때는 clearParameters를 사용한다.
             ps.clearParameters();
             ps = conn.prepareStatement("select board_id, title, content, user_id, regdate, view_cnt from board where board_id = ?");
             ps.setInt(1, 1); // 1번째 물음표에 정수 값을 설정
             rs = ps.executeQuery();
-            if(rs.next()) { // 데이터를 읽어왔을 때
+            if(rs.next()) { // 데이터를 읽어왔을때.
                 int boardId = rs.getInt("board_Id");
                 String title = rs.getString("title");
                 String content = rs.getString("content");
@@ -43,7 +46,7 @@ public class TransactionTest03 {
             }
             conn.commit();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); // 어떤 Exception이 빌생했는지 확
             try {
                 System.out.println("ROLEBACK 합니다!!");
                 conn.rollback();
